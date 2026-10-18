@@ -2,7 +2,13 @@
 
 Keep this page on your phone while the computer is in BIOS. This is a personal continuation record for MSI PRO B760M-A WIFI (MS-7D99), BIOS E7D99IMS.AH0, observed on 18 October 2026. It is not a general installation procedure or a compatibility claim.
 
-## Verified after manual import
+## Completed: Secure Boot-on Omarchy boot verified
+
+The BIOS save confirmation was photographed changing **Secure Boot: Disabled → Enabled** and **Secure Boot Preset: Hardware/OS Compatibility → Maximum Security**. After the reboot at 22:04:57 local time on 18 October, root checks confirmed `SecureBoot=1`, `SetupMode=0` and a passing `sudo omasecboot status` ending **Nothing to do**. The signed primary Limine path and current UKI were used. All three certificates still match, every original KEK/db entry remains and dbx still exactly matches the original backup. The loader signature, configuration seal and watchers pass.
+
+The normal Secure Boot-on boot is verified. A deliberate rejection test of an untrusted image and a Windows boot in this state remain unrun. FQ0001 still appears because sbctl matches hardware rather than inspecting the chosen preset. The instructions below record the completed procedure; **do not repeat imports or BIOS changes** on the working installation.
+
+## Earlier verification after manual import
 
 - Secure Boot is **off**, Setup Mode is **off**. The imports persisted across reboot.
 - Each local PK, KEK and db certificate matches by type, owner and SHA-256. Each complete firmware payload is also byte for byte identical to its staged ESL file.
@@ -12,9 +18,9 @@ Keep this page on your phone while the computer is in BIOS. This is a personal c
 - The raw fallback and two older unsigned snapshot images require Secure Boot off.
 - The installer USB is available. The user reports that Windows on its separate SSD is not using BitLocker.
 
-**No Secure Boot-on boot or signature-enforcement test has passed yet.**
+At that stage, no Secure Boot-on boot or signature-enforcement test had passed.
 
-## Next: inspect MSI's execution policy
+## Policy correction and enable procedure used
 
 The last reported page showed **System Mode: User**, **Secure Boot: Disabled**, **Secure Boot Mode: Custom** and **Secure Boot Preset: Hardware/OS Comp...** (truncated), unchanged. The user also recalls **Maximum Security** being offered on the previous visit. Reconfirm it in the current menu. The FQ0001 hardware match does not inspect the current policy.
 
@@ -53,19 +59,12 @@ Observed workflow: **Set New Var → No to factory defaults/load from file → L
 
 Original reference backup: `/var/lib/omasecboot/firmware-backup/20261018T151648Z`. Do not replace it with current variables. MSI documents individual key operations in its [Intel 700 BIOS manual](https://download.msi.com/archive/mnu_exe/mb/Intel700BIOS.pdf), pages 30–31; the observed firmware calls the action **Set New Var**.
 
-## Prompt for the phone assistant
+## Continuing locally
 
-```text
-Continue from the completed imports; do not repeat enrollment. My local assistant is unavailable during BIOS. Guide me using the menu text I describe; photos are optional.
+No further BIOS change is needed for the verified normal Omarchy boot. To inspect the current installation:
 
-MSI PRO B760M-A WIFI (MS-7D99), BIOS E7D99IMS.AH0. Omarchy with Limine and a UKI, Windows on a separate SSD, no BitLocker according to me, installer USB available.
-
-After manual db, KEK and PK imports, the local assistant checked the rebooted machine as root. SecureBoot=0 and SetupMode=0. All three local certificates match, each complete firmware payload is byte-identical to its staged ESL, every original KEK/db entry remains and dbx exactly matches the ORIGINAL backup. The UKI and primary loader signatures, configuration seal, watchers and actual primary boot path pass. No enrollment repair is needed. The raw fallback and two old unsigned snapshots require Secure Boot off.
-
-The remaining BIOS step is FQ0001 execution policy, then final enable. Last reported page: System Mode User, Secure Boot Disabled, Custom mode, Secure Boot Preset truncated as Hardware/OS Comp..., unchanged. First help me open Secure Boot Preset and inspect the full choices while Secure Boot stays off. Upstream https://github.com/Foxboron/sbctl/wiki/FQ0001 specifies Maximum Security for that menu, or Deny Execute for Option ROM, Removable Media and Fixed Media if Image Execution Policy is offered instead. Do not guess at different labels. If a preset change proposes replacing/deleting/enrolling keys, cancel and report it.
-
-Once the actual policy is confirmed and corrected, help me enable Secure Boot while preserving Custom mode and imported keys, review the save-and-exit confirmation, and boot the normal Omarchy entry through Limine. If boot fails, disable Secure Boot again, preserve keys, boot normally and report the exact error. Do not choose Reset without saving to save changes. Do not rerun enrollment, force writes, clear keys, restore factory keys or clear TPM. No Secure Boot-on boot or signature-enforcement test has passed yet. A signed boot alone does not prove untrusted images are rejected. After returning, the local assistant must verify the live state again.
-
-Full guide:
-https://github.com/Somchandra17/omasecboot/blob/feature/firmware-quirk-status/docs/fork/phone-bios-guide.md
+```bash
+sudo omasecboot status
 ```
+
+Keep the original backup and private signing keys. Older unsigned snapshots and the raw fallback still require Secure Boot off. Any future enforcement test, Windows boot check or hardware acceptance work should be coordinated as a separate step; the successful signed boot alone does not prove rejection of an untrusted image.

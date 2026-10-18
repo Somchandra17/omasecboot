@@ -13,7 +13,19 @@ git log -3 --oneline
 
 The work is on `feature/firmware-quirk-status`, not the fork's `main` branch. GitHub authentication and the local Git author settings do not transfer with a clone. Use the user's GitHub identity when needed; this checkout used `Som` and `85082756+Somchandra17@users.noreply.github.com`.
 
-The user asked for this handoff so an agent can resume without needing the old conversation. Continue useful repository work autonomously within the authorised scope. Detect the current OS and boot state first: Fedora was the last observed host; a new clone may be on Omarchy. Do not assume that Omarchy or OmaSecBoot has been installed or set up.
+The user asked for this handoff so an agent can resume without needing the old conversation. Continue useful repository work autonomously within the authorised scope. Detect the current OS and boot state first: Omarchy was observed on 2026-10-18 after the reinstall. Do not assume that OmaSecBoot has been installed or set up.
+
+## Resumed on Omarchy, 2026-10-18
+
+The user asked to set up Secure Boot on this machine while committing the work to their fork. The existing clone is on `feature/firmware-quirk-status`; the feature-file checksums match the preserved validation manifest.
+
+Read-only checks found Omarchy 4.0.5-1, the running and installed `linux-omarchy` 7.2.8-9, Limine 12.9.3-1 and `limine-mkinitcpio-hook` 1.40.0-2. `bootctl status` identifies Limine and the running UKI. Secure Boot and Setup Mode both read 0. DMI identifies the MSI PRO B760M-A WIFI (MS-7D99), BIOS A.H0. This confirms the observed identity, not signature enforcement or hardware acceptance.
+
+The Linux ESP is vfat, mounted read/write with `fmask=0077,dmask=0077`, with about 1.3 GiB available. Its largest UKI and the fallback loader still need root-level inspection. The firmware lists Limine, Windows Boot Manager and a fallback entry named `UEFI OS`; that entry's presence does not establish that it has been boot-tested. No pending packages were listed by `pacman -Qu` against the local databases; a completed Omarchy update and subsequent reboot still need confirmation. Setup Mode being off does not prove that the keys are the factory keys.
+
+At the initial check, neither `sbctl` nor OmaSecBoot was installed. Recovery USB readiness, the Windows recovery key being at hand, prior custom-key enrollment and the firmware key-menu wording remain unconfirmed. Do not run setup or enroll keys until the applicable prerequisites are settled. No boot files or firmware variables have been changed by this resumed session at this point, and no hardware acceptance row has been recorded.
+
+The installed Limine hook package is newer than the earlier container validation's 1.38.0-1.1. Run the real-tool contract suites against the installed versions before proceeding; a skipped or failed case is not evidence of compatibility. Record the new results here as preparation continues.
 
 ## User's goal and hardware context
 
@@ -51,8 +63,8 @@ The feature commit is separate from this fork-only handoff material so it can be
 
 ## Next tasks, in order
 
-- [ ] Confirm which OS is now running and that this branch is checked out. Inspect repository state before editing; preserve any new user changes.
-- [ ] If Omarchy is not installed, help the user follow its current official installation guidance. Installation must target the intended Linux SSD; full-disk installation erases the selected drive. The installer requires Secure Boot off. Leave the TPM and firmware keys alone during this preparation.
+- [x] Confirm which OS is now running and that this branch is checked out. The resumed checkout was clean, on the feature branch, on Omarchy 4.0.5.
+- [x] Confirm Omarchy is installed. No installation or drive erasure is needed on the observed host.
 - [ ] Once installed, confirm normal Omarchy boot, update it and restart with `systemctl reboot`, keeping Secure Boot off. Do not infer a functioning boot chain from the software tests in this repository.
 - [ ] Read [the field-testing prerequisites](docs/field-testing.md#before-you-start) and [the recovery guide](docs/recovery.md) with the user. Establish recovery media, the Windows recovery key, ESP space, the current factory/custom key state and the firmware's key-menu wording before any setup. If the prerequisites do not apply, report that rather than changing keys to force them to apply.
 - [ ] Run the documented Level 1 procedure on the actual MSI machine, with the recorder at every prescribed row. Level 1 changes boot files and settings while Secure Boot remains off; it is not a read-only diagnostic. Coordinate the real-machine steps with the user; do not run them unattended merely because this file lists them.

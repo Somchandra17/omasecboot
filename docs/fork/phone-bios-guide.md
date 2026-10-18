@@ -1,85 +1,71 @@
-# MSI key import: phone guide
+# MSI Secure Boot: phone continuation guide
 
-Open this page on your phone before restarting the computer. This is a personal continuation guide for the MSI PRO B760M-A WIFI (MS-7D99), BIOS A.H0, observed on 18 October 2026. The BIOS import has not yet been completed or verified. It is not an upstream installation procedure or a compatibility claim.
+Keep this page on your phone while the computer is in BIOS. This is a personal continuation record for MSI PRO B760M-A WIFI (MS-7D99), BIOS E7D99IMS.AH0, observed on 18 October 2026. It is not a general installation procedure or a compatibility claim.
 
-## Current position
+## Verified after manual import
 
-- Omarchy boots normally through the signed UKI and the signed Limine loader. The loader's configuration seal and the watchers pass the installed tool's checks.
-- Secure Boot is disabled, Setup Mode is enabled and the Platform Key is absent. Custom mode was selected in the BIOS.
-- The original three KEK entries, six db entries and dbx remain. Root-level comparisons found KEK, db and dbx byte for byte unchanged from the backup after the failed write.
-- `omasecboot setup` failed at its first db write, including a recorded retry that printed `uid=0(root)` and effective UID 0. It has not enrolled the local certificates. The cause of the authenticated-write rejection remains unresolved.
-- The user has the Omarchy installer USB and reports that Windows is not using BitLocker.
-- Public signature-list files are prepared on the Linux EFI partition under `EFI/omasecboot-enroll/`. They were exported by sbctl and checked against OmaSecBoot's append plan. They contain the existing entries plus the local certificates. No private signing keys were copied.
+- Secure Boot is **off**, Setup Mode is **off**. The imports persisted across reboot.
+- Each local PK, KEK and db certificate matches by type, owner and SHA-256. Each complete firmware payload is also byte for byte identical to its staged ESL file.
+- PK: 1254 bytes/1 entry; KEK: 5147 bytes/4 entries; db: 9709 bytes/7 entries, excluding efivarfs's four attribute bytes.
+- Every original KEK/db entry remains. dbx, including its attributes, is byte for byte unchanged from the original pre-enrollment backup.
+- Root `sudo omasecboot status` exited 0. The current UKI and primary loader signatures, configuration seal and watchers pass. This boot used the signed primary Limine path on the correct Linux EFI partition.
+- The raw fallback and two older unsigned snapshot images require Secure Boot off.
+- The installer USB is available. The user reports that Windows on its separate SSD is not using BitLocker.
 
-## Before entering BIOS
+**No Secure Boot-on boot or signature-enforcement test has passed yet.**
 
-Keep this page available on the phone. On the computer:
+## Next: inspect MSI's execution policy
+
+The last reported page showed **System Mode: User**, **Secure Boot: Disabled**, **Secure Boot Mode: Custom** and **Secure Boot Preset: Hardware/OS Comp...** (truncated), unchanged. The user also recalls **Maximum Security** being offered on the previous visit. Reconfirm it in the current menu. The FQ0001 hardware match does not inspect the current policy.
+
+On the computer, check the boot files before entering BIOS:
 
 ```bash
 sudo omasecboot status --quiet && systemctl reboot --firmware-setup
 ```
 
-If the report fails, remain in Omarchy and run `sudo omasecboot status` to see why.
+If the check fails, remain in Omarchy and run `sudo omasecboot status` for details.
 
-## Import the prepared lists
+Open **Security → Secure Boot**, leave Secure Boot **Disabled** and mode **Custom**, then open **Secure Boot Preset** and describe the full choices to the phone assistant. [Upstream FQ0001 guidance](https://github.com/Foxboron/sbctl/wiki/FQ0001) specifies:
 
-Keep **Secure Boot disabled** and **Secure Boot Mode set to Custom**.
+- For **Secure Boot Preset**, select **Maximum Security** if that exact choice is offered.
+- For the alternative **Image Execution Policy** menu, set **Option ROM**, **Removable Media** and **Fixed Media** to **Deny Execute**.
 
-Open **Security → Secure Boot → Key Management**. The photographed BIOS menu offers **Set New Var** when a key database is opened.
+If the labels differ, report the choices before enabling. If selecting a preset proposes replacing, deleting or enrolling keys, cancel that operation and report it. The imported keys are already verified. Do not infer the policy from an unknown or truncated label, or write a private firmware variable to change it.
 
-Use **Set New Var** with each complete file below, in this order. The files already include the existing certificates, so this preserves their trust when the correct complete file is imported.
+After confirming and correcting the actual policy, coordinate the final enable with the assistant. Preserve Custom mode and imported keys. Review the save-and-exit confirmation and save the changes; **Reset without saving** does not save changes. Boot the normal **Omarchy** entry through **Limine**, rather than an older unsigned snapshot or the raw **UEFI OS** fallback. If the boot is refused, disable Secure Boot in BIOS, save and start the normal entry again, preserving the keys and reporting the exact error.
 
-| Order | BIOS entry | File on the Linux EFI partition | Expected key count afterwards |
-| --- | --- | --- | --- |
-| 1 | Authorized Signatures (db) | `EFI\omasecboot-enroll\db.esl` | 7 |
-| 2 | Key Exchange Keys (KEK) | `EFI\omasecboot-enroll\KEK.esl` | 4 |
-| 3 | Platform Key (PK), last | `EFI\omasecboot-enroll\PK.esl` | 1 |
+After a successful boot, the local assistant must verify the live SecureBoot variable, enrollment and boot files again. An enabled indicator and a signed boot do not alone prove rejection of untrusted images; that remains a separate enforcement test.
 
-Select the option that loads a file. If the prompt specifically asks whether to load factory defaults, decline that choice and use the file-loading option. If a format is requested, these files are **EFI Signature Lists**, without efivarfs's four attribute bytes or an authenticated-update wrapper.
+## Observed import workflow: completed, do not repeat
 
-The exact file-picker dialogue has not been observed. If it does not offer the file-loading route, cannot find the files, rejects the format, or the counts differ, cancel the pending action with Escape. Leave Secure Boot off and return to Omarchy. Describe the last dialogue in the chat; no photo is required. Keep any successful imports in place for inspection rather than deleting variables to start again.
+Software enrollment failed on its first db write, including a retry that proved effective UID 0. Its underlying authenticated-write rejection remains unresolved; missing sudo does not explain it. KEK, db and dbx remained unchanged after that failure.
 
-Leave **Forbidden Signatures (dbx)** unchanged. Do not use **Delete all Secure Boot variables** or **Enroll all Factory Default keys**. Finish by saving and booting Omarchy with Secure Boot still disabled.
+Complete public ESL files were then imported manually in this order:
 
-The counts are a visual check, not proof of preserved certificates. After returning, the actual variables must be compared with the original backup and local certificates before Secure Boot is enabled.
+| Order | Variable | File on Linux EFI partition |
+| --- | --- | --- |
+| 1 | db | `EFI\omasecboot-enroll\db.esl` |
+| 2 | KEK | `EFI\omasecboot-enroll\KEK.esl` |
+| 3 | PK, last | `EFI\omasecboot-enroll\PK.esl` |
 
-## After returning to Omarchy
+Observed workflow: **Set New Var → No to factory defaults/load from file → Linux EFI filesystem → file → Public Key Certificate → confirm the matching variable and filename**. This BIOS groups EFI Signature Lists under **Public Key Certificate**. The Linux filesystem was fourth in that session, not a stable selection rule. Some summary rows were stale until revisited. No dbx operation, key deletion, factory-key enrollment or TPM clearing was reported. These files contain public certificates, not private signing keys.
 
-Tell the local assistant which imports succeeded. It can record the state and verify all three local certificates, every original KEK/db entry and unchanged dbx. A read-only report is also available:
+Original reference backup: `/var/lib/omasecboot/firmware-backup/20261018T151648Z`. Do not replace it with current variables. MSI documents individual key operations in its [Intel 700 BIOS manual](https://download.msi.com/archive/mnu_exe/mb/Intel700BIOS.pdf), pages 30–31; the observed firmware calls the action **Set New Var**.
 
-```bash
-sudo omasecboot status
-```
-
-Do not enable Secure Boot until enrollment and the boot files have been verified. Before the final enable, inspect MSI's image-execution policy: sbctl reports FQ0001, and a hardware match does not inspect the current setting. Follow [sbctl's FQ0001 guidance](https://github.com/Foxboron/sbctl/wiki/FQ0001) for the actual menu offered. No firmware enforcement test or Secure Boot-on boot has been completed.
-
-MSI documents the individual key-management operations in its [Intel 700 BIOS manual](https://download.msi.com/archive/mnu_exe/mb/Intel700BIOS.pdf), pages 30–31. The photographed firmware labels the operation **Set New Var**.
-
-## Prompt for a new ChatGPT conversation on your phone
-
-Copy the following into a new phone chat:
+## Prompt for the phone assistant
 
 ```text
-Help me continue Secure Boot setup from my phone while my PC is in BIOS. My local assistant is unavailable during BIOS, so do not assume you can run commands or inspect the PC. Guide me using the menu text I describe; photos are optional.
+Continue from the completed imports; do not repeat enrollment. My local assistant is unavailable during BIOS. Guide me using the menu text I describe; photos are optional.
 
-Hardware: MSI PRO B760M-A WIFI (MS-7D99), BIOS A.H0. Omarchy with Limine and a UKI; Windows is on a separate SSD. I have the installer USB and am not using BitLocker.
+MSI PRO B760M-A WIFI (MS-7D99), BIOS E7D99IMS.AH0. Omarchy with Limine and a UKI, Windows on a separate SSD, no BitLocker according to me, installer USB available.
 
-Completed: signing keys exist; the UKI and primary Limine loader are signed; the configuration is sealed; watchers are active. A normal reboot and the subsequent status check passed. The raw fallback and a recovery snapshot exist.
+After manual db, KEK and PK imports, the local assistant checked the rebooted machine as root. SecureBoot=0 and SetupMode=0. All three local certificates match, each complete firmware payload is byte-identical to its staged ESL, every original KEK/db entry remains and dbx exactly matches the ORIGINAL backup. The UKI and primary loader signatures, configuration seal, watchers and actual primary boot path pass. No enrollment repair is needed. The raw fallback and two old unsigned snapshots require Secure Boot off.
 
-Current firmware: Secure Boot disabled, Custom mode, SetupMode=1, AuditMode=0, PK absent. Three original KEK entries, six original db entries and dbx are preserved. Provision Factory Default keys was shown as Enabled; do not assume this caused the failure.
+The remaining BIOS step is FQ0001 execution policy, then final enable. Last reported page: System Mode User, Secure Boot Disabled, Custom mode, Secure Boot Preset truncated as Hardware/OS Comp..., unchanged. First help me open Secure Boot Preset and inspect the full choices while Secure Boot stays off. Upstream https://github.com/Foxboron/sbctl/wiki/FQ0001 specifies Maximum Security for that menu, or Deny Execute for Option ROM, Removable Media and Fixed Media if Image Execution Policy is offered instead. Do not guess at different labels. If a preset change proposes replacing/deleting/enrolling keys, cancel and report it.
 
-Software enrollment failed at the first db write with permission denied, twice. The retry proved uid=0(root), effective UID 0. The error is not explained by missing sudo. KEK, db and dbx were compared afterwards and still matched the backup byte for byte. The underlying rejection is unresolved. Do not force enrollment, clear every key or clear the TPM.
+Once the actual policy is confirmed and corrected, help me enable Secure Boot while preserving Custom mode and imported keys, review the save-and-exit confirmation, and boot the normal Omarchy entry through Limine. If boot fails, disable Secure Boot again, preserve keys, boot normally and report the exact error. Do not choose Reset without saving to save changes. Do not rerun enrollment, force writes, clear keys, restore factory keys or clear TPM. No Secure Boot-on boot or signature-enforcement test has passed yet. A signed boot alone does not prove untrusted images are rejected. After returning, the local assistant must verify the live state again.
 
-Prepared public files on the Linux EFI partition:
-EFI/omasecboot-enroll/db.esl
-EFI/omasecboot-enroll/KEK.esl
-EFI/omasecboot-enroll/PK.esl
-They contain the complete existing lists plus my certificates, were checked against the append plan, and contain no private keys.
-
-BIOS path: Security > Secure Boot > Key Management. Opening Authorized Signatures (db) shows Details, Save To File, Set New Var, Append Key and Delete Var. The planned manual fallback is Set New Var from the prepared complete EFI Signature List files: db first (expected 7 keys), KEK next (4), PK last (1). Leave dbx unchanged and Secure Boot disabled. The file-picker dialogue has not been observed, so help me identify the file-loading option without guessing at ambiguous confirmations. If an import fails, leave completed imports intact and return to Linux for inspection.
-
-Afterwards, the local assistant must verify enrollment, preserved KEK/db certificates and unchanged dbx before enabling Secure Boot. MSI FQ0001 is reported; review its actual image-execution policy before the final enable. No Secure Boot-on boot or signature-enforcement test has passed yet.
-
-The full phone guide is at:
+Full guide:
 https://github.com/Somchandra17/omasecboot/blob/feature/firmware-quirk-status/docs/fork/phone-bios-guide.md
 ```

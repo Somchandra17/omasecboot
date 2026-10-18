@@ -1,0 +1,6 @@
+shellcheck -x bin/omasecboot lib/checks.sh lib/common.sh lib/files.sh lib/firmware.sh lib/limine.sh lib/sign.sh lib/status.sh lib/windows.sh limine/90-omasecboot-sign tests/acceptance-record.sh tests/acceptance-share.sh tests/commands.sh tests/common.sh tests/container.sh tests/contract-limine.sh tests/contract-sbctl.sh tests/documents.sh tests/firmware.sh tests/install.sh tests/limine.sh tests/mutations.sh tests/package.sh tests/parts.sh tests/records.sh tests/replay-records.sh tests/sign.sh tests/status.sh tests/windows.sh tests/lib/esl.sh tests/lib/harness.sh tests/lib/sandbox.sh tests/lib/transcript.sh
+# JSONC is JSON with whole-line comments.
+grep -v '^[[:space:]]*//' omarchy/omarchy-menu.jsonc | jq -e . >/dev/null
+# makepkg consumes package metadata and supplies srcdir/pkgdir at execution.
+shellcheck --shell=bash --exclude=SC2034,SC2154 PKGBUILD
+shellcheck --shell=bash --exclude=SC2329 omasecboot.install

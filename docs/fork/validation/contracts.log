@@ -1,0 +1,27 @@
+bash tests/contract-sbctl.sh
+PASS: contract-sbctl/keys-and-owner
+PASS: contract-sbctl/plan-is-the-firmware-plus-the-local-certificate
+PASS: contract-sbctl/export-needs-no-setup-mode
+PASS: contract-sbctl/export-is-what-a-write-produces
+PASS: contract-sbctl/enrolled-state-is-recognised-and-left-alone
+PASS: contract-sbctl/rebuild-plan-for-cleared-firmware
+PASS: contract-sbctl/microsoft-2023-certificates-are-the-ones-sbctl-ships
+PASS: contract-sbctl/signature-answers
+PASS: contract-sbctl/file-list-answers
+PASS: contract-sbctl/firmware-quirks-match-fixture-hardware
+contract-sbctl tests passed (10 cases, sbctl 0.18)
+bash tests/contract-limine.sh
+PASS: contract-limine/settings-are-read-as-upstream-reads-them
+PASS: contract-limine/pass-leaves-an-unsealed-limine-unsigned
+PASS: contract-limine/esp-mounts-read-the-real-table
+PASS: contract-limine/hooks-run-as-the-contract-says
+PASS: contract-limine/our-hook-runs-between-upstreams
+PASS: contract-limine/upstream-still-offers-what-this-tool-uses
+PASS: contract-limine/lock-is-the-one-upstream-holds
+PASS: contract-limine/loader-paths-and-backup-are-upstreams
+PASS: contract-limine/fallback-step-copies-over-whatever-is-there
+PASS: contract-limine/enrollment-is-read-back
+PASS: contract-limine/reset-enroll-runs-no-hook-and-restores-the-loader
+PASS: contract-limine/enroll-config-refuses-bad-input
+PASS: contract-limine/upstreams-enrollment-and-ours-prove-the-same-loader
+contract-limine tests passed (13 cases, Limine 12.9.3, limine-mkinitcpio-hook 1.38.0-1.1, sbctl 0.18, util-linux 2.42.4-1)

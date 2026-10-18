@@ -1,0 +1,280 @@
+bash tests/common.sh
+PASS: common/settings-follow-upstream-layers
+PASS: common/enrollment-counts-only-in-the-default-file
+PASS: common/atomic-write-replaces-whole-files
+PASS: common/needs-attention-round-trip
+PASS: common/only-the-esp-records-an-incident
+PASS: common/unreadable-attention-is-no-absence
+PASS: common/file-safety-refuses-what-others-can-change
+PASS: common/esp-mount-rule-follows-the-kernels-options
+PASS: common/lock-is-taken-and-released
+PASS: common/replaced-lock-file-is-not-a-lock
+PASS: common/busy-lock-is-status-75
+PASS: common/inherited-unlocked-descriptor-waits-briefly
+PASS: common/inherited-descriptor-is-reused
+PASS: common/children-run-unlocked
+PASS: common/prompts-need-a-terminal-and-name-what-was-cancelled
+PASS: common/contract-cases-run-only-in-their-sandbox
+PASS: common/esp-path-has-one-form
+common tests passed (17 cases)
+bash tests/limine.sh
+  → Setting ENABLE_VERIFICATION=no in /tmp/omasecboot-limine.Fl8Dte/settings-round-trip-from-stock/etc/default-limine
+  → Setting ENABLE_ENROLL_LIMINE_CONFIG=yes in /tmp/omasecboot-limine.Fl8Dte/settings-round-trip-from-stock/etc/default-limine
+PASS: limine/settings-round-trip-from-stock
+  → Setting ENABLE_VERIFICATION=no in /tmp/omasecboot-limine.Fl8Dte/original-values-come-back-verbatim/etc/default-limine
+  → Setting ENABLE_ENROLL_LIMINE_CONFIG=yes in /tmp/omasecboot-limine.Fl8Dte/original-values-come-back-verbatim/etc/default-limine
+PASS: limine/original-values-come-back-verbatim
+PASS: limine/failed-write-keeps-the-settings-file
+  → Setting ENABLE_VERIFICATION=no in /tmp/omasecboot-limine.Fl8Dte/originals-are-recorded-once/etc/default-limine
+  → Setting ENABLE_ENROLL_LIMINE_CONFIG=yes in /tmp/omasecboot-limine.Fl8Dte/originals-are-recorded-once/etc/default-limine
+PASS: limine/originals-are-recorded-once
+PASS: limine/settings-file-changed-meanwhile-is-not-overwritten
+  → Setting ENABLE_VERIFICATION=no in /tmp/omasecboot-limine.Fl8Dte/malformed-originals-record-is-no-answer/etc/default-limine
+  → Setting ENABLE_ENROLL_LIMINE_CONFIG=yes in /tmp/omasecboot-limine.Fl8Dte/malformed-originals-record-is-no-answer/etc/default-limine
+PASS: limine/malformed-originals-record-is-no-answer
+PASS: limine/fallback-is-not-added-without-room
+PASS: limine/stale-os-hashes-are-found
+PASS: limine/snapshot-hashes-are-upstreams
+  → Sealing and signing the Limine loader
+  → Sealing and signing the Limine loader
+PASS: limine/primary-is-sealed-signed-and-reproved
+  → Sealing and signing the Limine loader
+  → Sealing and signing the Limine loader
+PASS: limine/failed-rebuild-keeps-the-old-loader
+  → Sealing and signing the Limine loader
+  → Sealing and signing the Limine loader
+PASS: limine/rebuild-uses-the-loader-upstream-deployed
+PASS: limine/corrupt-backup-publishes-nothing
+PASS: limine/unwritten-seal-or-signature-publishes-nothing
+PASS: limine/stale-staging-files-are-swept
+  → Sealing and signing the Limine loader
+  → Sealing and signing the Limine loader
+PASS: limine/change-during-the-rebuild-is-caught
+PASS: limine/restless-limine-conf-is-not-reported-sealed
+PASS: limine/seal-classes-follow-the-slot
+  ! The ESP reported a write error at /tmp/omasecboot-limine.Fl8Dte/fallback-states/esp/EFI/BOOT/.omasecboot-loader.ubx8EX (incident 0967a5ee26eb). Do not reboot, with Secure Boot on or off; run sudo omasecboot status
+PASS: limine/fallback-states
+PASS: limine/watch-units-are-template-instances
+PASS: limine/shadowing-configs-are-listed
+PASS: limine/hashed-paths-are-resolved-before-they-compare
+PASS: limine/unreadable-limine-conf-is-no-answer-about-hashes
+PASS: limine/remove-proof-counts-only-upstreams-os-entries
+limine tests passed (24 cases)
+bash tests/sign.sh
+PASS: sign/converges-and-is-idempotent
+PASS: sign/history-files-are-never-touched
+PASS: sign/other-systems-files-are-never-touched
+PASS: sign/fallback-is-returned-to-raw
+PASS: sign/harmful-rows-are-found-and-removed
+PASS: sign/unsealed-limine-is-never-signed
+PASS: sign/untold-seal-is-not-signed-and-fails-the-pass
+PASS: sign/unproved-state-fails-the-pass
+PASS: sign/stale-hash-alone-fails-the-pass
+PASS: sign/foreign-fallback-is-left-alone
+PASS: sign/lower-case-foreign-fallback-is-left-alone
+PASS: sign/failure-writes-needs-attention
+PASS: sign/claimed-signature-is-proved
+PASS: sign/unsynced-esp-is-said
+PASS: sign/unsafe-esp-mount-writes-nothing
+PASS: sign/answer-about-another-file-is-no-answer
+PASS: sign/full-esp-is-not-written-to
+PASS: sign/busy-lock-writes-no-needs-attention
+PASS: sign/restore-in-progress-is-left-alone
+PASS: sign/full-pass-says-an-incident-wherever-it-ends
+PASS: sign/seal-only-reseals-and-stops
+PASS: sign/seal-only-waits-for-pacman-to-finish
+PASS: sign/pass-looks-again-after-its-wait
+PASS: sign/hashed-alias-is-not-signed
+PASS: sign/primary-under-another-case-is-never-signed-in-place
+sign tests passed (25 cases)
+bash tests/status.sh
+PASS: status/not-set-up-is-not-a-problem
+PASS: status/clean-machine-names-the-firmware-step
+PASS: status/firmware-quirks-are-warnings
+PASS: status/unreadable-firmware-quirks-need-attention
+PASS: status/enrollment-state-chooses-the-next-step
+PASS: status/problems-set-exit-status
+PASS: status/sign-repairs-these
+PASS: status/restart-warning-follows-the-boot-risk
+PASS: status/limine-conf-without-entries-blocks
+PASS: status/missing-kernel-image-blocks
+PASS: status/stale-os-hash-needs-setup
+PASS: status/harmful-sbctl-rows-need-setup
+PASS: status/blocking-problems-name-no-repair-command
+PASS: status/unknown-states-block
+PASS: status/unreadable-firmware-is-a-problem
+PASS: status/needs-attention-is-a-problem
+PASS: status/stock-machine-is-sent-to-setup
+PASS: status/old-snapshots-are-a-note-not-a-problem
+PASS: status/sealed-but-unsigned-is-not-called-unsealed
+PASS: status/missing-limine-boot-entry-blocks
+PASS: status/full-esp-is-a-note
+PASS: status/missing-2023-certificates-are-notes
+PASS: status/old-rescue-loader-is-a-note
+PASS: status/restore-lock-is-said
+PASS: status/unread-history-signatures-are-said
+PASS: status/shadowing-limine-conf-blocks
+PASS: status/unsafe-esp-mount-blocks
+PASS: status/unsealed-limine-is-reported-by-its-signature
+PASS: status/signed-unsealed-loader-is-said-after-remove
+PASS: status/fallback-raw-is-only-what-sbctl-can-tell
+PASS: status/unreadable-key-variable-is-named
+PASS: status/unchecked-hash-is-a-note
+status tests passed (32 cases)
+bash tests/firmware.sh
+PASS: firmware/signature-lists-are-read-entry-by-entry
+PASS: firmware/backup-is-taken-once-and-complete
+PASS: firmware/mode-variables-are-read-exactly
+PASS: firmware/torn-backup-copy-is-refused
+PASS: firmware/local-certificates-are-found-by-owner
+PASS: firmware/plan-proofs-refuse-what-was-not-asked-for
+PASS: firmware/empty-never-means-append
+PASS: firmware/half-cleared-firmware-is-refused
+PASS: firmware/rotated-keys-are-enrolled-beside-the-old-ones
+PASS: firmware/enrollment-appends-and-reads-back
+PASS: firmware/interrupted-enrollment-is-finished-without-duplicates
+PASS: firmware/write-is-judged-by-reading-back
+PASS: firmware/lost-entries-are-named
+PASS: firmware/setup-asks-for-the-pk-then-enrolls-then-confirms
+PASS: firmware/missing-2023-kek-is-asked-about-before-the-pk-goes
+PASS: firmware/first-run-never-writes-to-the-firmware
+PASS: firmware/partial-loss-is-refused
+PASS: firmware/changed-dbx-is-refused
+PASS: firmware/audit-mode-is-refused
+PASS: firmware/non-volatile-defaults-are-not-used
+PASS: firmware/unsound-answers-from-sbctl-stop-setup
+PASS: firmware/cleared-firmware-is-rebuilt-with-the-loss-named
+PASS: firmware/firmware-cleared-before-the-first-setup-is-rebuilt
+PASS: firmware/proof-uses-the-backup-taken-with-the-pk-in-place
+PASS: firmware/backup-is-root-only-complete-and-ordered
+PASS: firmware/unsafe-backups-are-passed-over
+PASS: firmware/rebuild-plan-needs-more-than-the-local-entry
+PASS: firmware/firmware-step-needs-readable-modes
+PASS: firmware/enrollment-is-judged-by-the-variables-afterwards
+PASS: firmware/setup-needs-setup-mode-readable-before-any-change
+firmware tests passed (30 cases)
+bash tests/windows.sh
+  ! The firmware's boot entry Boot001A cannot be read as a load option
+PASS: windows/boot-entries-are-read-from-the-firmware
+PASS: windows/target-is-one-clear-entry-or-none
+PASS: windows/full-form-device-path-is-read
+PASS: windows/entry-is-written-once-and-taken-out-whole
+PASS: windows/misplaced-comment-is-never-deleted
+PASS: windows/entry-survives-upstreams-rewrite
+PASS: windows/unsafe-writes-are-refused
+PASS: windows/entry-comes-back-after-limine-conf-is-replaced
+PASS: windows/entry-is-only-taken-out-when-the-loader-follows
+PASS: windows/failed-remove-keeps-limine-conf-and-loader-together
+PASS: windows/entry-problems-are-reported-not-failed
+PASS: windows/lost-target-is-left-to-the-report
+PASS: windows/setup-reports-what-reached-limine-conf
+PASS: windows/setup-without-a-target-changes-nothing
+PASS: windows/bootnext-is-judged-by-reading-back
+PASS: windows/bootnext-waits-for-a-writer-at-work
+PASS: windows/partial-seal-read-proves-nothing
+PASS: windows/partial-seal-read-keeps-limine-conf
+PASS: windows/encryption-is-acknowledged-before-the-firmware-changes
+PASS: windows/unknown-encryption-state-is-asked-about
+PASS: windows/windows-without-a-listed-volume-is-not-ruled-out
+PASS: windows/windows-setup-needs-a-machine-that-is-set-up
+PASS: windows/failed-preparation-changes-neither-file
+PASS: windows/publication-failures-leave-a-pair-or-say-so
+tests/windows.sh: line 884: 176435 Hangup                     ROOT_DIR=$ROOT_DIR setsid env --default-signal=TERM,INT,HUP bash -c "$CLI_PROCESS" omasecboot windows setup > "$FIX/run/output" 2>&1
+PASS: windows/signal-between-the-renames-leaves-a-pair
+PASS: windows/signal-beside-a-write-error-is-recorded
+PASS: windows/signal-beside-a-failed-loader-rename-is-recorded
+PASS: windows/watchers-pass-builds-the-loader-after-a-failed-rename
+PASS: windows/killed-publication-rebuilds-the-loader
+PASS: windows/unrecorded-esp-write-error-still-fails
+PASS: windows/watchers-pass-keeps-ignoring-term
+PASS: windows/windows-remove-says-a-write-error
+PASS: windows/chainloads-are-listed-as-upstream-names-them
+PASS: windows/chainload-beside-bitlocker-is-noted
+PASS: windows/printed-command-survives-the-shell
+PASS: windows/remove-reminds-of-the-recovery-key
+PASS: windows/entry-waits-for-upstreams-entries
+PASS: windows/displaced-entry-is-moved-behind-upstreams
+PASS: windows/real-shape-file-reads-right
+PASS: windows/late-writer-is-not-overwritten
+PASS: windows/template-put-there-after-the-look-is-not-written
+PASS: windows/target-name-must-be-one-limine-matches
+PASS: windows/target-problems-leave-the-restart-alone
+PASS: windows/failed-pass-keeps-the-entry-enabled
+PASS: windows/edited-entry-is-taken-out-whole
+PASS: windows/blank-line-inside-the-entry-leaves-no-orphans
+PASS: windows/indented-user-entry-after-ours-is-its-own
+windows tests passed (47 cases)
+bash tests/commands.sh
+PASS: commands/setup-from-stock-and-again
+PASS: commands/upstream-masked-failure-is-repaired
+PASS: commands/unsigned-arrival-is-signed
+PASS: commands/setup-stops-when-the-pass-fails
+PASS: commands/setup-refuses-an-unsafe-esp-mount
+PASS: commands/setup-refuses-before-changing-anything
+PASS: commands/unmounted-esp-and-unsafe-files-stop-the-commands
+PASS: commands/earlier-values-are-the-users
+PASS: commands/fallback-is-offered-only-into-an-empty-place
+PASS: commands/failed-fallback-step-is-reported
+PASS: commands/remove-returns-to-stock
+PASS: commands/remove-keeps-an-esp-incident
+PASS: commands/remove-records-a-failed-sync-of-the-loader
+PASS: commands/unreadable-record-is-said
+PASS: commands/rejected-records-survive-every-command
+PASS: commands/setup-is-not-ready-beside-an-incident
+PASS: commands/remove-warns-only-while-the-firmware-trusts-the-key
+PASS: commands/failed-disable-is-said
+PASS: commands/busy-remove-changes-nothing
+PASS: commands/acknowledge-clears-only-the-named-incident
+PASS: commands/refusals-say-why
+PASS: commands/commands-keep-their-grammar
+PASS: commands/remove-accepts-the-loader-upstream-kept
+PASS: commands/remove-can-be-run-again
+PASS: commands/silent-build-failure-stops-setup
+PASS: commands/hand-written-hash-stops-setup-with-the-way-out
+PASS: commands/setup-removes-harmful-sbctl-rows
+PASS: commands/busy-boot-files-exit-75
+PASS: commands/hook-pass-works-under-the-callers-lock
+PASS: commands/usage-errors-exit-2
+PASS: commands/status-quiet-prints-nothing
+PASS: commands/hook-never-fails-its-caller
+PASS: commands/setup-and-remove-wait-for-a-restore
+PASS: commands/unfinished-remove-is-reported
+PASS: commands/watchers-pass-finishes-through-a-stop
+PASS: commands/secure-boot-on-needs-trusted-keys
+PASS: commands/remove-keeps-its-record-after-a-masked-build-failure
+PASS: commands/remove-says-when-upstream-will-replace-a-foreign-fallback
+PASS: commands/remove-without-hashes-asked-for-has-no-proof
+PASS: commands/failed-mkinitcpio-stops-setup-with-its-status
+PASS: commands/failed-reset-enroll-keeps-the-record
+PASS: commands/remove-without-a-copy-names-the-way-out
+PASS: commands/setup-and-remove-on-the-real-shape
+PASS: commands/fallback-entry-upstream-adds-is-sealed-over
+commands tests passed (44 cases)
+bash tests/records.sh
+PASS: records/evidence-verdict-reads-the-checkout-and-the-install
+PASS: records/identifiers-are-renamed-and-the-rest-stays
+PASS: records/originals-stay-and-a-second-run-gives-the-same-names
+PASS: records/names-that-stay-are-pointed-at
+PASS: records/only-records-are-read-and-only-copies-deleted
+PASS: records/recorder-keeps-control-and-raw-bytes-out
+PASS: records/nothing-to-share-is-a-usage-error
+PASS: records/share-replaces-only-its-own-copies
+PASS: records/replay-judges-records-and-refuses-bad-ones
+records tests passed (9 cases)
+bash tests/parts.sh
+PASS: parts/parts-hold-every-entry-once
+PASS: parts/parts-outside-the-list-are-refused
+parts tests passed (2 cases)
+bash tests/install.sh
+PASS: install/staged-install
+install tests passed (1 cases)
+bash tests/package.sh
+PASS: package/built-package
+package tests passed (1 cases)
+bash tests/documents.sh
+PASS: documents/numbered-references-resolve
+PASS: documents/links-resolve
+PASS: documents/named-sections-and-fields-exist
+PASS: documents/quoted-messages-are-the-tools
+PASS: documents/checks-notice-a-broken-reference
+documents tests passed (5 cases)

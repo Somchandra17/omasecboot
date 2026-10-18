@@ -1,0 +1,318 @@
+bash tests/mutations.sh
+mutations: 315 of the 315 listed, 16 at a time
+F01 CAUGHT firmware/partial-loss-is-refused: setup enrolled although the key menu removed db entries
+F02 CAUGHT firmware/empty-never-means-append: append was judged safe with an empty db
+F03 CAUGHT firmware/changed-dbx-is-refused: setup enrolled although dbx differs from the backup
+F04 CAUGHT firmware/plan-proofs-refuse-what-was-not-asked-for: a plan that adds a second entry was accepted
+F05 CAUGHT firmware/plan-proofs-refuse-what-was-not-asked-for: a rebuild with two PK entries was accepted
+F06 CAUGHT firmware/empty-never-means-append: a half-cleared firmware was judged rebuildable
+F07 CAUGHT firmware/interrupted-enrollment-is-finished-without-duplicates: db was written a second time
+F08 CAUGHT firmware/write-is-judged-by-reading-back: a write the firmware ignored passed
+F09 CAUGHT status/enrollment-state-chooses-the-next-step: report:
+F10 CAUGHT firmware/half-cleared-firmware-is-refused: first setup failed:
+F11 CAUGHT firmware/missing-2023-kek-is-asked-about-before-the-pk-goes: setup went on although the question was declined
+F12 CAUGHT firmware/audit-mode-is-refused: setup enrolled a firmware in Audit Mode
+F13 CAUGHT firmware/setup-asks-for-the-pk-then-enrolls-then-confirms: report:
+F14 CAUGHT firmware/non-volatile-defaults-are-not-used: non-volatile defaults counted as the firmware's
+F15 CAUGHT firmware/unsafe-backups-are-passed-over: a world-writable backup served
+F16 CAUGHT firmware/unsafe-backups-are-passed-over: a backup with a world-writable file served
+F17 CAUGHT firmware/backup-is-root-only-complete-and-ordered: a backup was taken beside one later than the clock
+F18 CAUGHT firmware/empty-never-means-append: a rebuild without flags went on
+F19 CAUGHT firmware/empty-never-means-append: a backup without a PK served as the reference
+F20 CAUGHT commands/remove-returns-to-stock: remove ran with Secure Boot on
+F21 CAUGHT commands/secure-boot-on-needs-trusted-keys: setup created keys with Secure Boot on
+F22 CAUGHT commands/secure-boot-on-needs-trusted-keys: setup signed with keys the firmware does not hold
+F23 CAUGHT commands/setup-refuses-before-changing-anything: setup ran with a shadowing limine.conf
+F24 CAUGHT commands/setup-refuses-before-changing-anything: setup ran without UKIs
+F25a CAUGHT commands/setup-and-remove-wait-for-a-restore: setup ran beside a snapshot restore
+F25b CAUGHT commands/setup-and-remove-wait-for-a-restore: remove ran beside a snapshot restore
+F25c CAUGHT windows/entry-is-only-taken-out-when-the-loader-follows: windows setup ran during a snapshot restore
+F25d CAUGHT windows/entry-is-only-taken-out-when-the-loader-follows: something changed during a restore
+F26b CAUGHT sign/pass-looks-again-after-its-wait: the pass sealed the loader while a restore began
+F27 CAUGHT sign/pass-looks-again-after-its-wait: the pass sealed the loader after remove
+F28 CAUGHT sign/pass-looks-again-after-its-wait: the pass wrote to an unmounted ESP
+F29 CAUGHT commands/unmounted-esp-and-unsafe-files-stop-the-commands: remove ran on a full ESP
+F30 CAUGHT commands/unmounted-esp-and-unsafe-files-stop-the-commands: remove with unsafe originals changed state
+F31 CAUGHT commands/hook-pass-works-under-the-callers-lock: status 2 under the caller's lock:
+F32 CAUGHT common/inherited-unlocked-descriptor-waits-briefly: returned 0
+F33 CAUGHT commands/setup-from-stock-and-again: setup failed:
+F34 CAUGHT commands/busy-remove-changes-nothing: remove returned 1
+F35 CAUGHT windows/entry-is-only-taken-out-when-the-loader-follows: limine.conf was edited under a sealed loader nobody re-seals
+F36 CAUGHT windows/template-put-there-after-the-look-is-not-written: the entry was written into the template put there after the look
+F37 CAUGHT sign/history-files-are-never-touched: a history file was modified
+F38 CAUGHT commands/setup-removes-harmful-sbctl-rows: rows left: /tmp/omasecboot-commands.FQPexD/setup-removes-harmful-sbctl-rows/esp/machine/limine_history/old.efi_sha256_abc
+F39 CAUGHT sign/lower-case-foreign-fallback-is-left-alone: listed as signable: /tmp/omasecboot-sign.X04Voh/lower-case-foreign-fallback-is-left-alone/esp/EFI/BOOT/bootx64.efi
+F40 CAUGHT commands/fallback-is-offered-only-into-an-empty-place: a foreign loader was replaced
+F41 CAUGHT commands/fallback-is-offered-only-into-an-empty-place: a foreign loader was replaced
+F42 CAUGHT limine/fallback-states: upstream's step was run over a foreign loader
+F43 CAUGHT commands/fallback-is-offered-only-into-an-empty-place: a foreign loader was offered for replacement
+F44 CAUGHT sign/other-systems-files-are-never-touched: listed as signable: /tmp/omasecboot-sign.xVJMio/other-systems-files-are-never-touched/esp/EFI/Linux/omarchy_linux.efi
+F45 CAUGHT sign/other-systems-files-are-never-touched: listed as signable: /tmp/omasecboot-sign.s4bNz3/other-systems-files-are-never-touched/esp/EFI/BOOT/BOOTIA32.EFI
+F46 CAUGHT sign/primary-under-another-case-is-never-signed-in-place: the primary under another case was signed in place
+F47 CAUGHT commands/silent-build-failure-stops-setup: a hashed UKI was signed in place
+F48 CAUGHT limine/stale-os-hashes-are-found: the hashed UKI was not recognised under another case
+F49 CAUGHT sign/harmful-rows-are-found-and-removed: a foreign fallback's row:
+F50 CAUGHT commands/setup-removes-harmful-sbctl-rows: rows left: /tmp/omasecboot-commands.vwAxrB/setup-removes-harmful-sbctl-rows/esp/machine/limine_history/old.efi_sha256_abc
+F51 CAUGHT status/sealed-but-unsigned-is-not-called-unsealed: report:
+F52 CAUGHT sign/failure-writes-needs-attention: a pass that could not seal the loader over a changed limine.conf passed
+F53 CAUGHT limine/change-during-the-rebuild-is-caught: a change during the first round failed the pass
+F54 CAUGHT limine/restless-limine-conf-is-not-reported-sealed: the pass reported a seal while limine.conf kept changing
+F55 CAUGHT commands/remove-without-a-copy-names-the-way-out: remove reported stock without a raw loader to prove it
+F56 CAUGHT commands/remove-keeps-its-record-after-a-masked-build-failure: remove reported stock with the entries not rebuilt
+F57 CAUGHT commands/silent-build-failure-stops-setup: message:
+F58 CAUGHT commands/watchers-pass-finishes-through-a-stop: the stopped pass failed:
+F59 CAUGHT sign/seal-only-waits-for-pacman-to-finish: the pass waited 5s for a lock without a pacman
+F60 CAUGHT sign/seal-only-waits-for-pacman-to-finish: the wait for pacman has no bound
+F61 CAUGHT windows/publication-failures-leave-a-pair-or-say-so: the pair after a failed second rename
+F62 CAUGHT limine/unwritten-seal-or-signature-publishes-nothing: limine-enroll-does-nothing: the unproved copy replaced the primary
+F63 CAUGHT limine/unwritten-seal-or-signature-publishes-nothing: sbctl-sign-does-nothing: the unproved copy replaced the primary
+F64 CAUGHT windows/setup-without-a-target-changes-nothing: an entry outside BootOrder was taken as the target
+F65 CAUGHT windows/target-is-one-clear-entry-or-none: a label another entry shares, in other case and outside BootOrder, was accepted
+F66 CAUGHT windows/bootnext-is-judged-by-reading-back: a request the firmware ignored reported success
+F67 CAUGHT windows/entry-is-only-taken-out-when-the-loader-follows: the guard accepts a removed entry
+F68 CAUGHT windows/failed-remove-keeps-limine-conf-and-loader-together: the entry went before the loader was unsealed
+F69 CAUGHT windows/late-writer-is-not-overwritten: the write went over a newer file
+F70 CAUGHT limine/settings-file-changed-meanwhile-is-not-overwritten: the write went over a newer file
+F71 CAUGHT limine/seal-classes-follow-the-slot: two markers: unsealed
+F72 CAUGHT sign/stale-hash-alone-fails-the-pass: a stale OS hash passed
+F73 CAUGHT sign/converges-and-is-idempotent: the pass registered files with sbctl: /tmp/omasecboot-sign.JjrtXk/converges-and-is-idempotent/esp/EFI/Linux/omarchy_linux.efi
+F74 CAUGHT sign/full-esp-is-not-written-to: a tool was run to write: sbctl verify --json /tmp/omasecboot-sign.F9241x/full-esp-is-not-written-to/esp/EFI/BOOT/BOOTX64.EFI
+F75 CAUGHT sign/full-esp-is-not-written-to: a tool was run to write: limine enroll-config /tmp/omasecboot-sign.O9yJ5n/full-esp-is-not-written-to/esp/EFI/limine/.omasecboot-loader.81fyib 5076f7dce8b33e8c775
+F76 CAUGHT commands/hook-never-fails-its-caller: a failing tool made the hook fail its caller
+F77 CAUGHT sign/failure-writes-needs-attention: a seal-only pass cleared what a full pass had found
+F78 CAUGHT commands/setup-and-remove-on-the-real-shape: setup failed:
+F79 CAUGHT commands/setup-removes-harmful-sbctl-rows: no reason:
+F80 CAUGHT commands/setup-from-stock-and-again: setup failed:
+F84 CAUGHT windows/windows-setup-needs-a-machine-that-is-set-up: refusal:
+F86 CAUGHT limine/stale-staging-files-are-swept: staging files remain: /tmp/omasecboot-limine.83nJPG/stale-staging-files-are-swept/esp/.limine.conf.ghi789
+F87 CAUGHT status/shadowing-limine-conf-blocks: a shadowing limine.conf passed
+F98 CAUGHT windows/unsafe-writes-are-refused: limine.conf was rewritten on a full ESP
+F99 CAUGHT commands/hook-never-fails-its-caller: the dormant hook ran the tool
+F100 CAUGHT commands/usage-errors-exit-2: sign ran on a machine that was never set up
+F102 CAUGHT commands/setup-removes-harmful-sbctl-rows: setup went on beside a row that makes sbctl sign a history file in place
+F103 CAUGHT firmware/rotated-keys-are-enrolled-beside-the-old-ones: report:
+F105 CAUGHT windows/entry-problems-are-reported-not-failed: pass:
+F106 CAUGHT firmware/local-certificates-are-found-by-owner: two certificates of sbctl's own for a variable were taken as identified
+F107 CAUGHT firmware/empty-never-means-append: append was judged safe with an empty KEK
+F108 CAUGHT firmware/signature-lists-are-read-entry-by-entry: a list its entries do not fill was accepted
+F109 CAUGHT firmware/setup-needs-setup-mode-readable-before-any-change: setup recorded state before refusing
+F110 CAUGHT firmware/mode-variables-are-read-exactly: a six-byte variable was read
+F111 CAUGHT firmware/torn-backup-copy-is-refused: a copy that differs from the variable was taken as a backup
+F112 CAUGHT windows/entry-comes-back-after-limine-conf-is-replaced: status passed without the entry
+F113 CAUGHT windows/entry-problems-are-reported-not-failed: stale:   · The Windows entry in limine.conf is not the one for Windows Boot Manager
+F114 CAUGHT windows/displaced-entry-is-moved-behind-upstreams: status passed with the entry before Omarchy's
+F115 CAUGHT windows/windows-without-a-listed-volume-is-not-ruled-out: a Windows entry without a BitLocker volume read as absent
+F116 CAUGHT windows/windows-without-a-listed-volume-is-not-ruled-out: unreadable boot entries read as absent
+F117 CAUGHT windows/encryption-is-acknowledged-before-the-firmware-changes: keys were written without the question:
+F118 CAUGHT windows/encryption-is-acknowledged-before-the-firmware-changes: setup went on although the acknowledgement was declined
+F119 CAUGHT firmware/setup-asks-for-the-pk-then-enrolls-then-confirms: a declined enrollment went on
+F120 CAUGHT firmware/setup-asks-for-the-pk-then-enrolls-then-confirms: setup told a machine without a Limine boot entry to turn Secure Boot on
+F121 CAUGHT commands/setup-stops-when-the-pass-fails: setup went on after its pass failed
+F122 CAUGHT commands/remove-returns-to-stock: a declined remove went on
+F123 CAUGHT sign/claimed-signature-is-proved: a signature that was never written counted
+F124 CAUGHT sign/failure-writes-needs-attention: an unsealed loader was reported like any failure:   ✗ Could not sign /tmp/omasecboot-sign.dhI7up/failure-writes-needs-attention/esp/EFI/Linux/omarchy_linux.e
+F125 CAUGHT sign/fallback-is-returned-to-raw: the signed fallback was not restored to raw
+F126 CAUGHT limine/fallback-states: a signed, unsealed fallback is not altered
+F127 CAUGHT limine/originals-are-recorded-once: a second save overwrote the originals
+F128 CAUGHT limine/malformed-originals-record-is-no-answer: a malformed record was restored
+F129 CAUGHT sign/converges-and-is-idempotent: the pass registered files with sbctl: /tmp/omasecboot-sign.pgEltG/converges-and-is-idempotent/esp/EFI/limine/.omasecboot-loader.dVrUOO
+F130 CAUGHT limine/fallback-is-not-added-without-room: a fallback was added to a full ESP
+F131 CAUGHT sign/full-esp-is-not-written-to: a full ESP was written to
+F133 CAUGHT firmware/signature-lists-are-read-entry-by-entry: an entry without data was accepted
+F134 CAUGHT firmware/backup-is-taken-once-and-complete: absence was not recorded
+F135 CAUGHT firmware/unsafe-backups-are-passed-over: a backup was taken through a link
+F136 CAUGHT firmware/local-certificates-are-found-by-owner: case failed
+F137 CAUGHT sign/answer-about-another-file-is-no-answer: an answer about another file read as 0
+F138 CAUGHT common/file-safety-refuses-what-others-can-change: a file with a second hard link was accepted
+F139 CAUGHT common/esp-path-has-one-form: ESP_PATH=/tmp/omasecboot-common.N7UEuO/esp-path-has-one-form//esp read as /tmp/omasecboot-common.N7UEuO/esp-path-has-one-form//esp
+F140 CAUGHT common/esp-path-has-one-form: ESP_PATH=/tmp/omasecboot-common.21z7U0/esp-path-has-one-form/esp/ read as /tmp/omasecboot-common.21z7U0/esp-path-has-one-form/esp/
+F141 CAUGHT windows/target-is-one-clear-entry-or-none: two Windows entries resolved to one
+F142 CAUGHT windows/target-name-must-be-one-limine-matches: status 0 for the label 'Windows Boot Manager '
+F143 CAUGHT windows/misplaced-comment-is-never-deleted: state: stale for: /Windows
+F144 CAUGHT windows/unsafe-writes-are-refused: a world-writable limine.conf was rewritten
+F145 CAUGHT status/enrollment-state-chooses-the-next-step: Secure Boot on without the local keys passed
+F146 CAUGHT firmware/enrollment-is-judged-by-the-variables-afterwards: keys the firmware does not hold after the write passed
+F147 CAUGHT sign/unsealed-limine-is-never-signed: an unsealed Limine was signed
+F148 CAUGHT sign/untold-seal-is-not-signed-and-fails-the-pass: the pass passed beside a seal it cannot tell
+F149 CAUGHT sign/harmful-rows-are-found-and-removed: listed: /tmp/omasecboot-sign.SbIKA0/harmful-rows-are-found-and-removed/esp/machine/limine_history/old.efi_sha256_abc
+F150 CAUGHT sign/harmful-rows-are-found-and-removed: a row that stayed was taken as removed
+F151 CAUGHT status/unsealed-limine-is-reported-by-its-signature: a signed, unsealed Limine passed
+F152 CAUGHT status/signed-unsealed-loader-is-said-after-remove: no warning:
+F153 CAUGHT status/signed-unsealed-loader-is-said-after-remove: status passed with Secure Boot on
+F154 CAUGHT limine/seal-classes-follow-the-slot: a non-zero upper half: unsealed
+F155 CAUGHT limine/seal-classes-follow-the-slot: a short slot: blake2b 572d1805d672afb62249e016f90c350e3a9f834b65b1a8b2b40aa3c9e5d059e6224408d7c9114294e0e65ac0a707aad48eee
+F156 CAUGHT limine/seal-classes-follow-the-slot: a file that cannot be read gave an answer
+F157 CAUGHT limine/fallback-states: a fallback whose seal cannot be told is altered
+F158 CAUGHT sign/untold-seal-is-not-signed-and-fails-the-pass: the pass passed beside a seal it cannot tell
+F159 CAUGHT sign/untold-seal-is-not-signed-and-fails-the-pass: the pass passed beside a file it could not read
+F160 CAUGHT status/unsealed-limine-is-reported-by-its-signature: a seal that cannot be told passed
+F161 CAUGHT status/signed-unsealed-loader-is-said-after-remove: warned while the firmware does not trust the key:
+F162 CAUGHT limine/seal-classes-follow-the-slot: a run of 257 digits: unsealed
+F163 CAUGHT commands/remove-warns-only-while-the-firmware-trusts-the-key: enrolled keys:
+F164 CAUGHT status/signed-unsealed-loader-is-said-after-remove: unreadable SecureBoot:
+F165 CAUGHT commands/remove-warns-only-while-the-firmware-trusts-the-key: factory keys:
+F166 CAUGHT commands/remove-warns-only-while-the-firmware-trusts-the-key: warned although the restored setting seals:
+F167 CAUGHT commands/remove-warns-only-while-the-firmware-trusts-the-key: no conditional warning:
+F168 CAUGHT status/signed-unsealed-loader-is-said-after-remove: status failed on factory keys:
+F169 CAUGHT status/unsealed-limine-is-reported-by-its-signature: a signed file whose seal cannot be told passed
+F170 CAUGHT status/unsealed-limine-is-reported-by-its-signature: a file that could not be read passed
+F171 CAUGHT sign/harmful-rows-are-found-and-removed: an unreadable tracked file:
+F172 CAUGHT sign/untold-seal-is-not-signed-and-fails-the-pass: the pass passed beside a file it could not read
+F173 CAUGHT windows/failed-preparation-changes-neither-file: keys-gone, added: limine.conf or the loader changed
+F174 CAUGHT windows/signal-between-the-renames-leaves-a-pair: TERM: limine.conf and the loader were split
+F175 CAUGHT windows/signal-between-the-renames-leaves-a-pair: TERM: limine.conf and the loader were split
+F176 CAUGHT windows/signal-between-the-renames-leaves-a-pair: HUP: limine.conf and the loader were split
+F177 CAUGHT windows/signal-between-the-renames-leaves-a-pair: TERM: the command ended with 0, not on the signal:
+F178 CAUGHT windows/publication-failures-leave-a-pair-or-say-so: a failed rename of limine.conf passed
+F179 CAUGHT windows/publication-failures-leave-a-pair-or-say-so: report:   → Writing the Windows entry to limine.conf
+F180 CAUGHT sign/unsynced-esp-is-said: a pass whose ESP did not sync passed
+F181 CAUGHT windows/publication-failures-leave-a-pair-or-say-so: staging left after limine.conf changed
+F182 CAUGHT windows/publication-failures-leave-a-pair-or-say-so: staging left after a failed first rename
+F183 CAUGHT windows/watchers-pass-keeps-ignoring-term: the watchers' pass ended with 1 on a TERM after the renames: Terminated                 sleep 2
+F184 CAUGHT windows/publication-failures-leave-a-pair-or-say-so: a loader whose sync failed passed
+F185 CAUGHT sign/unsynced-esp-is-said: /tmp/omasecboot-sign.f8oOdh/unsynced-esp-is-said/esp/EFI/limine:   ✗ Not signing /tmp/omasecboot-sign.f8oOdh/unsynced-esp-is-said/esp/EFI/odd/x.efi: it carries Limine'
+F186 CAUGHT sign/unsynced-esp-is-said: /tmp/omasecboot-sign.FDakhz/unsynced-esp-is-said/esp/EFI/BOOT:   ✗ Not signing /tmp/omasecboot-sign.FDakhz/unsynced-esp-is-said/esp/EFI/odd/x.efi: it carries Limine's
+F187 CAUGHT sign/unsynced-esp-is-said: report:   ! The ESP reported a write error at /tmp/omasecboot-sign.4TvX7G/unsynced-esp-is-said/esp (incident 81ffc9900685). Do not reboot, with Secure Boot on or off;
+F188 CAUGHT windows/entry-is-written-once-and-taken-out-whole: round trip
+F189 CAUGHT commands/remove-keeps-an-esp-incident: remove passed beside a write error of the ESP
+F190 CAUGHT common/unreadable-attention-is-no-absence: a dangling link was cleared as no record
+F191 CAUGHT common/needs-attention-round-trip: rewritten in an unsafe state directory
+F192 CAUGHT sign/failure-writes-needs-attention: needs-attention was written after the lock was released
+F193 CAUGHT sign/unsynced-esp-is-said: a signature whose sync failed passed
+F194 CAUGHT windows/windows-remove-says-a-write-error: windows remove passed over a write error of the ESP
+F195 CAUGHT common/esp-mount-rule-follows-the-kernels-options: a mount others can write passed: rw,relatime,uid=1000,fmask=0077,dmask=0077,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro
+F196 CAUGHT common/esp-mount-rule-follows-the-kernels-options: a mount others can write passed: rw,relatime,fmask=0002,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro
+F197 CAUGHT common/esp-mount-rule-follows-the-kernels-options: a mount others can write passed: rw,relatime,fmask=0022,dmask=0000,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro
+F198 CAUGHT common/esp-mount-rule-follows-the-kernels-options: a mount without masks passed
+F199 CAUGHT common/esp-mount-rule-follows-the-kernels-options: another device's mount was counted
+F200 CAUGHT sign/unsafe-esp-mount-writes-nothing: full: a pass on an unsafe ESP passed
+F201 CAUGHT status/unsafe-esp-mount-blocks: an unsafe ESP passed
+F202 CAUGHT commands/setup-refuses-an-unsafe-esp-mount: refusal:
+F203 CAUGHT common/esp-mount-rule-follows-the-kernels-options: an idmapped mount passed
+F204 CAUGHT status/enrollment-state-chooses-the-next-step: report:
+F205 CAUGHT status/sign-repairs-these: the closing warning is the weaker one:
+F206 CAUGHT status/restart-warning-follows-the-boot-risk: the worst risk:
+F207 CAUGHT status/sign-repairs-these: the closing warning is the weaker one:
+F208 CAUGHT status/sign-repairs-these: the closing warning is the weaker one:
+F209 CAUGHT status/restart-warning-follows-the-boot-risk: an ESP incident:
+F210 CAUGHT status/problems-set-exit-status: next step:
+F211 CAUGHT status/stale-os-hash-needs-setup: next step:
+F212 CAUGHT status/shadowing-limine-conf-blocks: restart:
+F213 CAUGHT status/missing-limine-boot-entry-blocks: report:
+F214 CAUGHT status/enrollment-state-chooses-the-next-step: report:
+F215 CAUGHT status/limine-conf-without-entries-blocks: a limine.conf without entries passed
+F216 CAUGHT status/limine-conf-without-entries-blocks: no file:
+F217 CAUGHT status/missing-limine-boot-entry-blocks: without a fallback:
+F218 CAUGHT status/blocking-problems-name-no-repair-command: restart:
+F219 CAUGHT status/unknown-states-block: report:
+F220 CAUGHT status/missing-limine-boot-entry-blocks: report:
+F221 CAUGHT status/unsealed-limine-is-reported-by-its-signature: report:
+F222 CAUGHT status/unsealed-limine-is-reported-by-its-signature: report:
+F223 CAUGHT status/enrollment-state-chooses-the-next-step: report:
+F224 CAUGHT firmware/lost-entries-are-named: lost:
+F225 CAUGHT commands/secure-boot-on-needs-trusted-keys: no reminder:
+F226 CAUGHT commands/secure-boot-on-needs-trusted-keys: no reminder:
+F227 CAUGHT status/enrollment-state-chooses-the-next-step: no reminder:
+F228 CAUGHT status/signed-unsealed-loader-is-said-after-remove: no reminder:
+F229 CAUGHT records/evidence-verdict-reads-the-checkout-and-the-install: round 1, an installed file differs: counts
+F230 CAUGHT records/evidence-verdict-reads-the-checkout-and-the-install: inside another checkout: counts
+F231 CAUGHT common/only-the-esp-records-an-incident: the ESP's failure was not recorded and said:   ! The ESP reported a write error at /tmp/omasecboot-common.scyqgL/only-the-esp-records-an-incident/esp/EFI
+F232 CAUGHT windows/publication-failures-leave-a-pair-or-say-so: both at once:   → Writing the Windows entry to limine.conf
+F233 CAUGHT windows/publication-failures-leave-a-pair-or-say-so: report:   → Writing the Windows entry to limine.conf
+F234 CAUGHT status/missing-kernel-image-blocks: a missing kernel image passed
+F235 CAUGHT status/missing-kernel-image-blocks: report:
+F236 CAUGHT status/missing-kernel-image-blocks: the pass passed over a missing kernel image
+F237 CAUGHT status/missing-kernel-image-blocks: a missing kernel image passed
+F238 CAUGHT limine/unwritten-seal-or-signature-publishes-nothing: a staged copy whose sync failed passed
+F240 CAUGHT windows/publication-failures-leave-a-pair-or-say-so: a write that was made was said as none:   → Writing the Windows entry to limine.conf
+F242 CAUGHT windows/failed-preparation-changes-neither-file: keys-gone, added: limine.conf or the loader changed
+F243 CAUGHT windows/publication-failures-leave-a-pair-or-say-so: both at once:   → Writing the Windows entry to limine.conf
+F244 CAUGHT windows/signal-between-the-renames-leaves-a-pair: TERM: the command ended with 0, not on the signal:
+F245 CAUGHT windows/windows-remove-says-a-write-error: report:
+F246 CAUGHT windows/killed-publication-rebuilds-the-loader: report:   → Writing the Windows entry to limine.conf
+F247 CAUGHT status/missing-kernel-image-blocks: pass:   ✗ limine.conf line 31 names a file the ESP does not hold: boot():/EFI/Linux/omarchy_linux-omarchy.efi. Run sudo limine-update before a restart
+F248 CAUGHT sign/unsynced-esp-is-said: report:   ! The ESP reported a write error at /tmp/omasecboot-sign.MAenV0/unsynced-esp-is-said/esp (incident 0eda5c6be26f). Do not reboot, with Secure Boot on or off;
+F250 CAUGHT sign/unsynced-esp-is-said: report:   ! The ESP reported a write error at /tmp/omasecboot-sign.2alN4I/unsynced-esp-is-said/esp (incident 9cfcf1f70ad2). Do not reboot, with Secure Boot on or off;
+F251 CAUGHT sign/unsynced-esp-is-said: the watchers' pass failed over an earlier incident
+F254 CAUGHT common/only-the-esp-records-an-incident: /tmp/omasecboot-common.MdQ7M0/only-the-esp-records-an-incident/state/backup: recorded as the ESP's
+F255 CAUGHT common/only-the-esp-records-an-incident: /tmp/omasecboot-common.IhOLT6/only-the-esp-records-an-incident/esp-other: recorded as the ESP's
+F256 CAUGHT common/only-the-esp-records-an-incident: /tmp/omasecboot-common.hPZ1zJ/only-the-esp-records-an-incident/esp/../esp-other: recorded as the ESP's
+F257 CAUGHT common/only-the-esp-records-an-incident: the ESP's failure did not mark the command
+F258 CAUGHT common/needs-attention-round-trip: an incident without an ID was recorded
+F259 CAUGHT windows/publication-failures-leave-a-pair-or-say-so: a write error in the publication passed
+F260 CAUGHT windows/publication-failures-leave-a-pair-or-say-so: a write error of the ESP passed
+F261 CAUGHT windows/publication-failures-leave-a-pair-or-say-so: a loader whose sync failed passed
+F262 CAUGHT limine/unwritten-seal-or-signature-publishes-nothing: the failed sync of the staged copy was not recorded
+F263 CAUGHT limine/fallback-states: after a failed sync of the raw copy: altered,
+F264 CAUGHT commands/remove-records-a-failed-sync-of-the-loader: record or incident:
+F265 CAUGHT commands/acknowledge-clears-only-the-named-incident: a stale ID was accepted
+F266 CAUGHT commands/acknowledge-clears-only-the-named-incident: acknowledged as a user who is not root
+F267 CAUGHT commands/acknowledge-clears-only-the-named-incident: acknowledge under a busy lock returned 0:
+F268 CAUGHT commands/acknowledge-clears-only-the-named-incident: not only the incident was cleared: the ESP reported a write error on a day
+F269 CAUGHT windows/bootnext-is-judged-by-reading-back: a request was made while an incident stands
+F270 CAUGHT commands/remove-keeps-an-esp-incident: a second remove passed beside the incident
+F271 CAUGHT commands/remove-keeps-an-esp-incident: report:
+F272 CAUGHT commands/remove-keeps-an-esp-incident: remove kept a pass's finding
+F273 CAUGHT commands/remove-keeps-an-esp-incident: report:
+F274 CAUGHT status/restart-warning-follows-the-boot-risk: an ESP incident:
+F275 CAUGHT status/restart-warning-follows-the-boot-risk: an ESP incident:
+F276 CAUGHT windows/windows-remove-says-a-write-error: status:
+F277 CAUGHT status/restart-warning-follows-the-boot-risk: the incident was also listed as a pass's finding:
+F278 CAUGHT sign/unsynced-esp-is-said: beside another failure:   ✗ Not signing /tmp/omasecboot-sign.OOa27W/unsynced-esp-is-said/esp/EFI/odd/x.efi: it carries Limine's marker, and its checksum slot does not
+F279 CAUGHT sign/unsynced-esp-is-said: report:   ! The ESP reported a write error at /tmp/omasecboot-sign.HEas9A/unsynced-esp-is-said/esp (incident d77a52b6ab45). Do not reboot, with Secure Boot on or off;
+F281 CAUGHT windows/windows-remove-says-a-write-error: windows remove passed over an unrecorded write error
+F282 CAUGHT common/only-the-esp-records-an-incident: /tmp/omasecboot-common.JEpOLd/only-the-esp-records-an-incident/esp/gone: recorded as the ESP's
+F283 CAUGHT common/only-the-esp-records-an-incident: /tmp/omasecboot-common.kPDMpJ/only-the-esp-records-an-incident/state/backup: a failed sync passed
+F284 CAUGHT common/needs-attention-round-trip: a second failure: the ESP reported a write error on 2026-10-18T01:09:18Z, incident 000000000000
+F285 CAUGHT common/unreadable-attention-is-no-absence: a dangling link was taken for no record
+F286 CAUGHT common/unreadable-attention-is-no-absence: taken for an incident or none: the ESP reported a write error on a day
+F287 CAUGHT common/unreadable-attention-is-no-absence: a failed read was taken for a clean record
+F288 CAUGHT common/unreadable-attention-is-no-absence: a finding was written over lines that could not be read
+F289 CAUGHT common/unreadable-attention-is-no-absence: a dangling link was cleared as no record
+F290 CAUGHT common/unreadable-attention-is-no-absence: not unknown: the ESP reported a write error on a day
+F291 CAUGHT commands/rejected-records-survive-every-command: omasecboot acknowledge 0123456789ab failed with status 1 and gave no reason:
+F292 CAUGHT windows/bootnext-is-judged-by-reading-back: omasecboot windows bootnext failed with status 1 and gave no reason:
+F293 CAUGHT windows/bootnext-waits-for-a-writer-at-work: a request was made beside an incident recorded while it waited
+F294 CAUGHT status/restart-warning-follows-the-boot-risk: an unknown incident:
+F295 CAUGHT sign/full-pass-says-an-incident-wherever-it-ends: a restore beside an unknown incident passed
+F296 CAUGHT sign/full-pass-says-an-incident-wherever-it-ends: a full pass beside an unknown incident passed
+F297 CAUGHT sign/full-pass-says-an-incident-wherever-it-ends: the watchers' pass failed beside a restore
+F298 CAUGHT sign/full-pass-says-an-incident-wherever-it-ends: a restore beside an incident passed
+F299 CAUGHT sign/full-pass-says-an-incident-wherever-it-ends: unmounted:   ✗ The EFI system partition is not mounted
+F300 CAUGHT sign/full-pass-says-an-incident-wherever-it-ends: a removed machine beside an incident passed
+F301 CAUGHT sign/full-pass-says-an-incident-wherever-it-ends: a restore that began during the wait passed
+F302 CAUGHT sign/full-pass-says-an-incident-wherever-it-ends: unmounted after the wait:   ✗ The EFI system partition is not mounted
+F303 CAUGHT sign/full-pass-says-an-incident-wherever-it-ends: unsafe:   ✗ The ESP must be writable by root alone, but users other than root can write to it through /tmp/omasecboot-sign.uMSeo9/full-pass-says
+F305 CAUGHT commands/rejected-records-survive-every-command: sign could not finish: sign passed
+F306 CAUGHT common/unreadable-attention-is-no-absence: taken for an incident or none: the ESP reported a write error on a day, incident 0123456789ab
+F307 CAUGHT common/unreadable-attention-is-no-absence: a dangling link was taken for no record
+F308 CAUGHT commands/unreadable-record-is-said: omasecboot status failed with status 1 and gave no reason:
+F309 CAUGHT commands/unreadable-record-is-said: omasecboot sign failed with status 1 and gave no reason:
+F310 CAUGHT commands/unreadable-record-is-said: omasecboot sign failed with status 1 and gave no reason:
+F311 CAUGHT sign/restore-in-progress-is-left-alone: status
+F312 CAUGHT commands/remove-keeps-an-esp-incident: sign after remove:   ✗ OmaSecBoot is not set up. Run: sudo omasecboot setup
+F313 CAUGHT windows/bootnext-is-judged-by-reading-back: the request was made outside the boot lock
+F314 CAUGHT common/unreadable-attention-is-no-absence: a dangling link was cleared as no record
+F315 CAUGHT commands/rejected-records-survive-every-command: \0\0\0\0: status passed
+F316 CAUGHT common/unreadable-attention-is-no-absence: taken for an incident or none: sign could not finish on a day, more
+F317 CAUGHT common/unreadable-attention-is-no-absence: taken for an incident or none: the ESP reported a write error on a day
+F318 CAUGHT common/unreadable-attention-is-no-absence: a failed byte check was taken for a clean record
+F319 CAUGHT windows/partial-seal-read-proves-nothing: a partial read gave an answer
+F320 CAUGHT windows/signal-beside-a-failed-loader-rename-is-recorded: plain: not said:
+F321 CAUGHT windows/signal-beside-a-failed-loader-rename-is-recorded: plain: not recorded: cat: /tmp/omasecboot-windows.4OUDGP/signal-beside-a-failed-loader-rename-is-recorded/state/needs-attention: No such
+F322 CAUGHT windows/signal-beside-a-failed-loader-rename-is-recorded: plain: not said:
+F323 CAUGHT windows/watchers-pass-builds-the-loader-after-a-failed-rename: an end that did not come was said:
+F324 CAUGHT records/replay-judges-records-and-refuses-bad-ones: an escaping path, status 0: replay: 1 states, 1 whose OS entries name a boot():/ file; 0 with a missing file, 0 without menu entries, 0 the me
+F325 CAUGHT records/replay-judges-records-and-refuses-bad-ones: a menu check that failed, status 0: replay: 1 states, 1 whose OS entries name a boot():/ file; 0 with a missing file, 0 without menu entries,
+F326 CAUGHT parts/parts-hold-every-entry-once: the 1 parts do not hold every entry once
+F327 CAUGHT parts/parts-hold-every-entry-once: the 2 parts do not hold every entry once
+F328 CAUGHT parts/parts-outside-the-list-are-refused: part '1/316' was refused without the usage line
+F329 CAUGHT parts/parts-outside-the-list-are-refused: part '4/3' was refused without the usage line
+F330 CAUGHT status/firmware-quirks-are-warnings: firmware warnings:
+F331 CAUGHT status/unreadable-firmware-quirks-need-attention: unreadable quirks passed: {"firmware_quirks":{}}
+F332 CAUGHT status/unreadable-firmware-quirks-need-attention: unreadable quirks passed:
+F333 CAUGHT status/unreadable-firmware-quirks-need-attention: unreadable quirks passed: {"firmware_quirks":[]} {"firmware_quirks":[]}
+F334 CAUGHT status/unreadable-firmware-quirks-need-attention: unreadable quirks passed: {"firmware_quirks":[{"id":"FQ0001","name":"Name\nforged line","severity":"CRITICAL","link":"https://example.invalid"}]
+F335 CAUGHT status/unreadable-firmware-quirks-need-attention: a failed sbctl passed
+F336 CAUGHT status/unreadable-firmware-quirks-need-attention: unreadable quirks passed: {"firmware_quirks":[{"id":"","name":"Name","severity":"CRITICAL","link":"https://example.invalid"}]}
+mutations caught (315)
